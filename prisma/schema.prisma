@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id        String      @id @default(cuid())
+  email     String      @unique
+  name      String?
+  password  String
+  watchlist Watchlist[]
+  createdAt DateTime    @default(now())
+}
+
+model Watchlist {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  mediaId   Int
+  mediaType MediaType
+  title     String
+  posterUrl String?
+  status    Status    @default(PLAN_TO_WATCH)
+  rating    Int?
+  review    String?
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, mediaId, mediaType])
+}
+
+enum MediaType {
+  MOVIE
+  ANIME
+}
+
+enum Status {
+  PLAN_TO_WATCH
+  WATCHING
+  COMPLETED
+  DROPPED
+}
