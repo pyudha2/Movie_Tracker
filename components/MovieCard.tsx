@@ -12,6 +12,7 @@ interface MovieCardProps {
     status: string;
     rating: number;
     genres: string[];
+    priority?: boolean;
 }
 
 function MovieCard({
@@ -23,6 +24,7 @@ function MovieCard({
     status,
     rating,
     genres,
+    priority = false,
 }: MovieCardProps) {
     const stars = Math.round(rating / 2);
 
@@ -37,6 +39,7 @@ function MovieCard({
                             fill
                             sizes="180px"
                             className="object-cover"
+                            priority={priority}
                         />
                     </div>
                     <div className="text-white text-sm font-medium mt-1">
