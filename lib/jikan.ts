@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const JIKAN_BASE_URL = process.env.JIKAN_BASE_URL;
+const JIKAN_BASE_URL = process.env.NEXT_PUBLIC_JIKAN_BASE_URL;
 
 const jikanClient = axios.create({
     baseURL: JIKAN_BASE_URL,
