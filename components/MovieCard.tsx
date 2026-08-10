@@ -11,7 +11,6 @@ interface MovieCardProps {
     year: string;
     status: string;
     rating: number;
-    genres: string[];
     priority?: boolean;
 }
 
@@ -23,14 +22,13 @@ function MovieCard({
     year,
     status,
     rating,
-    genres,
     priority = false,
 }: MovieCardProps) {
     const stars = Math.round(rating / 2);
 
     return (
-        <Link href={`/detail/${id}`} className="block">
-            <div className="border-4 border-gray-400 rounded-xl bg-white h-100 w-80 pt-2 px-2">
+        <Link href={`/main/detail/${mediaType.toLowerCase()}/${id}`} className="block">
+            <div className="border-4 border-gray-400 rounded-xl bg-white h-100 w-70 pt-2 px-2">
                 <div className="rounded-xl bg-blue-400 w-45 pb-2 flex flex-col items-center mx-auto">
                     <div className="relative rounded-xl overflow-hidden h-55 w-45">
                         <Image
@@ -48,20 +46,10 @@ function MovieCard({
                 </div>
 
                 <div>
-                    <h3 className="font-bold text-black text-center mt-1 line-clamp-1">
+                    <h3 className="font-bold text-black text-center mt-1 line-clamp-2">
                         {title}
                     </h3>
-                    <div className="flex flex-wrap gap-2 my-2 align-center justify-center">
-                        {genres.slice(0, 3).map((genre) => (
-                            <span
-                                key={genre}
-                                className="bg-white text-black text-xs px-3 py-1 rounded-full border border-gray-400"
-                            >
-                                {genre}
-                            </span>
-                        ))}
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-2 pt-2">
                         <div className="text-black">
                             <p>{year}</p>
                             <p>{status}</p>

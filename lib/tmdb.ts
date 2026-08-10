@@ -36,7 +36,7 @@ export const searchMovies = async (query: string, page: number = 1) => {
 };
 
 export const getMovieDetail = async (id: number) => {
-    const { data } = await tmdbClient.get<TMDBMovieDetail>(`/movie/${id}`);
+    const { data } = await tmdbClient.get(`/movie/${id}`);
     return data;
 };
 

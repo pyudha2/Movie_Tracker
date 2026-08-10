@@ -119,7 +119,6 @@ export default function Home() {
               year={item.year}
               status={item.status}
               rating={item.rating}
-              genres={item.genres}
               priority={index < 4}
             />
           ))}
