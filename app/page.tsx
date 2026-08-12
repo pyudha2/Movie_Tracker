@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import SearchBar from "@/components/SearchBar";
 import MovieCard from "@/components/MovieCard";
 import { searchAnime, getTopAnime } from "@/lib/jikan";
-import Link from "next/link";
 
 interface MediaItem {
   id: number;
@@ -92,21 +91,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="flex justify-between w-full px-6 mb-6">
-        <Link href="/" className="text-xl font-bold text-black self-center">
-          TrackerList
-        </Link>
-
-        <div className="flex justify-end self-center">
-          <Link href="/login" className="ml-4 bg-white text-black px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors border border-gray-500">
-            Login
-          </Link>
-          <Link href="/register" className="ml-4 bg-blue-500 text-white px-4 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors border border-gray-500">
-            Sign Up
-          </Link>
-        </div>
-      </div>
-
       <div className="flex flex-col items-center">
         <SearchBar onSearch={setQuery} onTabChange={setTab} />
       </div>
