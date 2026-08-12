@@ -98,12 +98,12 @@ export default function Home() {
         </Link>
 
         <div className="flex justify-end self-center">
-          <button className="ml-4 bg-white text-black px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors border border-gray-500">
+          <Link href="/login" className="ml-4 bg-white text-black px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors border border-gray-500">
             Login
-          </button>
-          <button className="ml-4 bg-blue-500 text-white px-4 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors border border-gray-500">
+          </Link>
+          <Link href="/register" className="ml-4 bg-blue-500 text-white px-4 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors border border-gray-500">
             Sign Up
-          </button>
+          </Link>
         </div>
       </div>
 

@@ -29,17 +29,19 @@ export default function LoginPage() {
         }
 
         toast.success("Login successful");
-        router.push("/browse");
+        router.push("/");
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="bg-white min-h-screen" onSubmit={handleSubmit}>
             <input
                 type="email"
                 placeholder="Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)
+                }
                 required
+                className="text-black border-2 border-black p-2 mb-4 rounded-xl"
             />
             <input
                 type="password"
@@ -47,10 +49,11 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="text-black border-2 border-black p-2 mb-4 rounded-xl"
             />
-            <button type="submit" disabled={loading}>
+            <button className="text-white bg-blue-600 hover:bg-blue-700 text-lg font-bold py-2 px-4 rounded-xl" type="submit" disabled={loading}>
                 {loading ? "Logging in..." : "Login"}
             </button>
-        </form>
+        </form >
     );
 }
