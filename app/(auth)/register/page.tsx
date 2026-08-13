@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -32,7 +33,7 @@ export default function RegisterPage() {
             }
 
             const loginResult = await signIn("credentials", {
-                email,
+                name,
                 password,
                 redirect: false,
             });
@@ -54,32 +55,47 @@ export default function RegisterPage() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-            />
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={8}
-            />
-            <button type="submit" disabled={loading}>
-                {loading ? "Creating account..." : "Register"}
-            </button>
-        </form>
+        <div className="bg-gray-300 min-h-screen flex flex-col items-center justify-center">
+            <div className="bg-white flex flex-col items-center justify-center border-2 border-black rounded-xl shadow-lg w-64 p-8">
+                <div className="flex flex-col items-center justify-center">
+                    <h1 className="text-2xl font-bold mb-4 text-black text-center">Sign Up to TrackerList</h1>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        className="text-black border-2 border-black p-2 mb-4 rounded-xl"
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="text-black border-2 border-black p-2 mb-4 rounded-xl"
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        minLength={8}
+                        className="text-black border-2 border-black p-2 mb-4 rounded-xl"
+                    />
+                    <div className="flex flex-col items-center justify-center">
+                        <button className="text-white bg-blue-600 hover:bg-blue-700 text-lg font-bold py-2 px-4 rounded-xl" type="submit" disabled={loading}>
+                            {loading ? "Creating account..." : "Sign Up"}
+                        </button>
+                        <Link href="/login" className="text-black hover:underline text-sm mt-3">
+                            Already have an account? <span className="font-bold">Login</span>
+                        </Link>
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 }

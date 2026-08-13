@@ -6,15 +6,15 @@ export async function POST(req: Request) {
     const { name, email, password } = await req.json();
 
     try {
-        const userExists = await prisma.user.findUnique({
+        const userExists = await prisma.user.findFirst({
             where: {
-                email,
+                OR: [{ email }, { name }],
             },
         });
 
         if (userExists) {
             return NextResponse.json(
-                { message: "User is already registered with this email address" },
+                { message: "Email or name is already registered" },
                 { status: 400 }
             );
         }
