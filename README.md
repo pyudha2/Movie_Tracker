@@ -4,12 +4,12 @@ Aplikasi web buat nge-track film dan anime yang mau/lagi/udah ditonton. User bis
 
 ## Fitur
 
-- 🔐 **Auth** — Register & login pakai nama + password (NextAuth Credentials)
-- 🎬 **Browse Movie & Anime** — Search dan browse populer dari TMDB (Movie) dan Jikan/MyAnimeList (Anime)
-- 📄 **Detail Page** — Sinopsis, genre, rating, dan info lengkap tiap judul
-- 📝 **Watchlist** — Simpan judul ke 4 status: Plan to Watch, Watching, Completed, Dropped
-- ⭐ **Rating & Review** — Kasih rating pribadi buat judul yang udah selesai ditonton
-- 📊 **Dashboard** — Statistik ringkas: total tracked, breakdown Movie/Anime, rata-rata rating, progress per status
+- **Auth** — Register & login pakai nama + password (NextAuth Credentials)
+- **Browse Movie & Anime** — Search dan browse populer dari TMDB (Movie) dan Jikan/MyAnimeList (Anime)
+- **Detail Page** — Sinopsis, genre, rating, dan info lengkap tiap judul
+- **Watchlist** — Simpan judul ke 4 status: Plan to Watch, Watching, Completed, Dropped
+- **Rating & Review** — Kasih rating pribadi buat judul yang udah selesai ditonton
+- **Dashboard** — Statistik ringkas: total tracked, breakdown Movie/Anime, rata-rata rating, progress per status
 
 ## Tech Stack
 
