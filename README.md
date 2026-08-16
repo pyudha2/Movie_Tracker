@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TrackerList — Movie & Anime Tracker
 
-## Getting Started
+Aplikasi web buat nge-track film dan anime yang mau/lagi/udah ditonton. User bisa cari judul, lihat detail, simpan ke watchlist pribadi, kasih rating, dan pantau progress lewat dashboard.
 
-First, run the development server:
+## Fitur
+
+- 🔐 **Auth** — Register & login pakai nama + password (NextAuth Credentials)
+- 🎬 **Browse Movie & Anime** — Search dan browse populer dari TMDB (Movie) dan Jikan/MyAnimeList (Anime)
+- 📄 **Detail Page** — Sinopsis, genre, rating, dan info lengkap tiap judul
+- 📝 **Watchlist** — Simpan judul ke 4 status: Plan to Watch, Watching, Completed, Dropped
+- ⭐ **Rating & Review** — Kasih rating pribadi buat judul yang udah selesai ditonton
+- 📊 **Dashboard** — Statistik ringkas: total tracked, breakdown Movie/Anime, rata-rata rating, progress per status
+
+## Tech Stack
+
+| Kategori | Teknologi |
+|---|---|
+| Framework | Next.js 16 (App Router) + TypeScript |
+| Styling | Tailwind CSS |
+| Database | MySQL + Prisma ORM v7 (`@prisma/adapter-mariadb`) |
+| Auth | NextAuth.js (Credentials Provider) |
+| State & Fetching | React Query (TanStack Query), Zustand |
+| Form | React Hook Form + Zod |
+| Data Eksternal | [TMDB API](https://www.themoviedb.org/documentation/api) (Movie), [Jikan API](https://jikan.moe/) (Anime) |
+| Icon | Lucide React |
+| Lainnya | Axios, React Hot Toast, use-debounce |
+
+## Struktur Folder
+
+```
+app/
+├── (auth)/
+│   ├── login/
+│   └── register/
+├── api/
+│   ├── auth/
+│   ├── movies/
+│   ├── watchlist/
+│   └── dashboard/
+├── (main)/
+│   ├── detail/
+│   │   ├── movie/[id]/
+│   │   └── anime/[id]/
+│   ├── watchlist/
+│   └── dashboard/
+├── page.tsx          # Browse page (halaman utama)
+├── layout.tsx
+└── providers.tsx
+
+components/
+├── Navbar.tsx
+├── Footer.tsx
+├── MovieCard.tsx
+├── SearchBar.tsx
+├── RatingStars.tsx
+└── WatchlistButton.tsx
+
+lib/
+├── prisma.ts
+├── auth.ts
+├── tmdb.ts
+└── jikan.ts
+
+prisma/
+└── schema.prisma
+```
+
+## Setup & Instalasi
+
+### 1. Clone & install dependencies
+
+```bash
+git clone <repo-url>
+cd movie-tracker
+npm install
+```
+
+### 2. Setup environment variables
+
+Buat file `.env` di root project:
+
+```env
+DATABASE_URL="mysql://root:password@localhost:3306/movie_tracker"
+NEXTAUTH_SECRET="generate-pakai-openssl-rand-base64-32"
+NEXTAUTH_URL="http://localhost:3000"
+
+TMDB_BASE_URL="https://api.themoviedb.org/3"
+TMDB_API_KEY="tmdb-read-access-token"
+
+NEXT_PUBLIC_JIKAN_BASE_URL="https://api.jikan.moe/v4"
+```
+
+> **Catatan:** `TMDB_API_KEY` pakai **Read Access Token** (v4 auth), bisa didapat gratis di [themoviedb.org](https://www.themoviedb.org/settings/api) setelah daftar akun.
+
+### 3. Setup database
+
+```bash
+# Buat database dulu di MySQL
+mysql -u root -p
+CREATE DATABASE movie_tracker;
+exit;
+
+# Generate Prisma Client & jalankan migrasi
+npx prisma generate
+npx prisma migrate dev --name init
+```
+
+### 4. Jalankan development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Cara Pakai
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Register** akun baru di `/register`
+2. **Browse** film/anime di halaman utama, toggle tab Movie/Anime buat ganti sumber data
+3. Klik judul buat lihat **detail**, tekan tombol **Add to Watchlist**
+4. Buka `/watchlist` buat kelola item yang udah disimpan — ubah status, kasih rating, atau hapus
+5. Cek `/dashboard` buat lihat ringkasan statistik tracking lo
 
-## Learn More
+## Catatan Teknis
 
-To learn more about Next.js, take a look at the following resources:
+- **Movie (TMDB)** diambil lewat API route sendiri (`/api/movies`) supaya API key TMDB nggak ke-expose ke browser.
+- **Anime (Jikan)** diambil langsung dari client-side karena Jikan API bersifat public (tanpa API key) dan pemanggilan lewat server sempat mengalami kendala koneksi (IPv6 resolution issue) di beberapa environment Windows.
+- Data movie/anime tidak disimpan penuh ke database — hanya `mediaId`, `title`, dan `posterUrl` yang disimpan di tabel `Watchlist` untuk efisiensi, sisanya tetap difetch dari API eksternal saat dibutuhkan.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Kredit Data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Data film disediakan oleh [TMDB](https://www.themoviedb.org/). Aplikasi ini menggunakan TMDB API tapi tidak diendorse atau disertifikasi oleh TMDB.
+- Data anime disediakan oleh [Jikan](https://jikan.moe/), unofficial MyAnimeList API.
 
-## Deploy on Vercel
+## Status Pengembangan
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Project ini dibuat untuk keperluan tugas/pembelajaran, dikembangkan secara bertahap sebagai bagian dari latihan fullstack development.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] Setup project, database, dan autentikasi
+- [x] Browse & search Movie/Anime
+- [x] Detail page
+- [x] Fitur Watchlist (CRUD + rating)
+- [x] Dashboard statistik
+- [ ] Halaman profil user
+- [ ] Fitur review lebih lengkap
