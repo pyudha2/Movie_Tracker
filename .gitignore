@@ -39,6 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+client_secret_507687856169-7bmquihpunp7pbgb5u3r10403d93kmjc.apps.googleusercontent.com.json
 
 /app/generated/prisma
 
