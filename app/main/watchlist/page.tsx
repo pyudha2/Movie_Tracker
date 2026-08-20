@@ -123,7 +123,7 @@ export default function WatchlistPage() {
                                             className="bg-white rounded-xl border border-gray-200 p-4 flex gap-4"
                                         >
                                             <Link
-                                                href={`/detail/${item.mediaType.toLowerCase()}/${item.mediaId}`}
+                                                href={`/main/detail/${item.mediaType.toLowerCase()}/${item.mediaId}`}
                                                 className="relative w-16 h-24 rounded-lg overflow-hidden flex shrink-0"
                                             >
                                                 <Image
@@ -136,7 +136,7 @@ export default function WatchlistPage() {
 
                                             <div className="flex-1">
                                                 <Link
-                                                    href={`/detail/${item.mediaType.toLowerCase()}/${item.mediaId}`}
+                                                    href={`/main/detail/${item.mediaType.toLowerCase()}/${item.mediaId}`}
                                                 >
                                                     <h3 className="font-bold text-black hover:underline">
                                                         {item.title}

@@ -16,25 +16,25 @@ export default function Navbar() {
                 {status === "loading" ? null : session ? (
                     <>
                         <Link
-                            href="/watchlist"
+                            href="/main/watchlist"
                             className="ml-4 self-center text-black font-medium hover:underline"
                         >
                             Watchlist
                         </Link>
                         <Link
-                            href="/dashboard"
+                            href="/main/dashboard"
                             className="ml-4 self-center text-black font-medium hover:underline"
                         >
                             Dashboard
                         </Link>
                         <Link
-                            href="/profile"
+                            href="/main/profile"
                             className="ml-4 self-center text-black font-medium hover:underline"
                         >
                             Profile
                         </Link>
                         <Link
-                            href="/reviews"
+                            href="/main/reviews"
                             className="ml-4 self-center text-black font-medium hover:underline"
                         >
                             My Reviews

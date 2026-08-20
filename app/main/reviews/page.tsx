@@ -55,7 +55,7 @@ export default function MyReviewsPage() {
                             updatedAt={r.updatedAt}
                             mediaTitle={r.title}
                             mediaPosterUrl={r.posterUrl}
-                            mediaHref={`/detail/${r.mediaType.toLowerCase()}/${r.mediaId}`}
+                            mediaHref={`/main/detail/${r.mediaType.toLowerCase()}/${r.mediaId}`}
                         />
                     ))}
                 </div>

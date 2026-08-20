@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { Star, Pencil } from "lucide-react";
 
 interface ReviewCardProps {
     rating: number | null;
@@ -37,7 +37,7 @@ export default function ReviewCard({
                     {reviewerName && (
                         <div className="w-9 h-9 rounded-full overflow-hidden bg-gray-200 shrink-0">
                             {reviewerImage ? (
-                                <Image
+                                <img
                                     src={reviewerImage}
                                     alt={reviewerName}
                                     width={36}
@@ -56,7 +56,7 @@ export default function ReviewCard({
                         <Link href={mediaHref} className="flex items-center gap-3">
                             {mediaPosterUrl && (
                                 <div className="relative w-9 h-12 rounded overflow-hidden shrink-0">
-                                    <Image src={mediaPosterUrl} alt={mediaTitle} fill className="object-cover" />
+                                    <img src={mediaPosterUrl} alt={mediaTitle} className="object-cover" />
                                 </div>
                             )}
                             <span className="font-medium text-black hover:underline">{mediaTitle}</span>
@@ -91,6 +91,16 @@ export default function ReviewCard({
             <p className="text-gray-700 text-sm mt-3 leading-relaxed whitespace-pre-wrap">
                 {review}
             </p>
+
+            {mediaHref && (
+                <Link
+                    href={mediaHref}
+                    className="inline-flex items-center gap-1 text-blue-600 hover:underline text-xs font-medium mt-3"
+                >
+                    <Pencil size={12} />
+                    Edit Review
+                </Link>
+            )}
         </div>
     );
 }

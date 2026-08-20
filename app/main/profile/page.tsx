@@ -3,9 +3,9 @@
 import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 interface ProfileData {
     user: {
