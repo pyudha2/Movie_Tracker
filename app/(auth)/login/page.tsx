@@ -1,17 +1,36 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
+const GOOGLE_ERROR_MESSAGES: Record<string, string> = {
+    OAuthAccountNotLinked:
+        "Email ini sudah terdaftar dengan metode login lain. Coba login pakai Name & Password.",
+    OAuthCallback: "Gagal memproses callback dari Google. Coba lagi.",
+    OAuthCreateAccount: "Gagal membuat akun dari Google. Coba lagi.",
+    AccessDenied: "Akses ditolak. Coba lagi.",
+    Configuration: "Konfigurasi server bermasalah. Hubungi admin.",
+};
+
 export default function LoginPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [googleLoading, setGoogleLoading] = useState(false);
+
+    useEffect(() => {
+        const error = searchParams.get("error");
+        if (error) {
+            const message = GOOGLE_ERROR_MESSAGES[error] ?? `Login gagal: ${error}`;
+            toast.error(message);
+            router.replace("/login");
+        }
+    }, [searchParams, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

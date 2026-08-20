@@ -33,6 +33,12 @@ export default function Navbar() {
                         >
                             Profile
                         </Link>
+                        <Link
+                            href="/reviews"
+                            className="ml-4 self-center text-black font-medium hover:underline"
+                        >
+                            My Reviews
+                        </Link>
                         <button
                             onClick={() => signOut()}
                             className="ml-4 bg-white text-black px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors border border-gray-500"

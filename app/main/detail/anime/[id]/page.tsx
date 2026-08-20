@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import { getAnimeDetail } from "@/lib/jikan";
 import WatchlistButton from "@/components/WatchlistButton";
+import ReviewSection from "@/components/ReviewSection";
 
 export default function AnimeDetailPage() {
     const params = useParams();
@@ -78,6 +79,8 @@ export default function AnimeDetailPage() {
                             : "/placeholder.png"
                     }
                 />
+
+                <ReviewSection mediaId={data.mal_id} mediaType="ANIME" />
             </div>
         </div>
     );

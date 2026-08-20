@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import WatchlistButton from "@/components/WatchlistButton";
+import ReviewSection from "@/components/ReviewSection";
 
 interface MovieDetail {
     id: number;
@@ -112,6 +113,8 @@ export default function MovieDetailPage() {
                             : "/placeholder.png"
                     }
                 />
+
+                <ReviewSection mediaId={data.id} mediaType="MOVIE" />
             </div>
         </div>
     );
