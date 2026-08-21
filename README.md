@@ -131,15 +131,3 @@ Buka [http://localhost:3000](http://localhost:3000).
 
 - Data film disediakan oleh [TMDB](https://www.themoviedb.org/). Aplikasi ini menggunakan TMDB API tapi tidak diendorse atau disertifikasi oleh TMDB.
 - Data anime disediakan oleh [Jikan](https://jikan.moe/), unofficial MyAnimeList API.
-
-## Status Pengembangan
-
-Project ini dibuat untuk keperluan tugas/pembelajaran, dikembangkan secara bertahap sebagai bagian dari latihan fullstack development.
-
-- [x] Setup project, database, dan autentikasi
-- [x] Browse & search Movie/Anime
-- [x] Detail page
-- [x] Fitur Watchlist (CRUD + rating)
-- [x] Dashboard statistik
-- [ ] Halaman profil user
-- [ ] Fitur review lebih lengkap
