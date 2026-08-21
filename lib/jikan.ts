@@ -4,6 +4,7 @@ const JIKAN_BASE_URL = process.env.NEXT_PUBLIC_JIKAN_BASE_URL;
 
 const jikanClient = axios.create({
     baseURL: JIKAN_BASE_URL,
+    timeout: 10000,
 });
 
 export interface JikanAnime {
@@ -22,23 +23,26 @@ export interface JikanAnime {
     genres: { mal_id: number; name: string }[];
 }
 
-export const searchAnime = async (query: string, page: number = 1) => {
+export const searchAnime = async (query: string, page: number = 1, signal?: AbortSignal) => {
     const { data } = await jikanClient.get("/anime", {
         params: { q: query, page, limit: 20 },
+        signal,
     });
     return data;
 };
 
-export const getAnimeDetail = async (id: number) => {
+export const getAnimeDetail = async (id: number, signal?: AbortSignal) => {
     const { data } = await jikanClient.get<{ data: JikanAnime }>(
-        `/anime/${id}`
+        `/anime/${id}`,
+        { signal }
     );
     return data.data;
 };
 
-export const getTopAnime = async (page: number = 1) => {
+export const getTopAnime = async (page: number = 1, signal?: AbortSignal) => {
     const { data } = await jikanClient.get("/top/anime", {
         params: { page },
+        signal,
     });
     return data;
 };

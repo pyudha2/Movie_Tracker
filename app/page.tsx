@@ -47,15 +47,22 @@ interface JikanSearchResponse {
   data: JikanAnimeResult[];
 }
 
+const MIN_ANIME_QUERY_LENGTH = 3;
+
 export default function Home() {
   const [query, setQuery] = useState("");
   const [tab, setTab] = useState<"MOVIE" | "ANIME">("MOVIE");
 
+  const isQueryTooShort =
+    tab === "ANIME" && query.length > 0 && query.length < MIN_ANIME_QUERY_LENGTH;
+
   const { data, isLoading, isError } = useQuery<MediaItem[]>({
     queryKey: ["media", tab, query],
-    queryFn: async () => {
+    enabled: !isQueryTooShort,
+    retry: 1,
+    queryFn: async ({ signal }) => {
       if (tab === "MOVIE") {
-        const res = await fetch(`/api/movies?query=${query}`);
+        const res = await fetch(`/api/movies?query=${query}`, { signal });
         const result: TMDBSearchResponse = await res.json();
 
         return result.results.map((movie): MediaItem => ({
@@ -71,9 +78,10 @@ export default function Home() {
           genres: [],
         }));
       } else {
-        const result: JikanSearchResponse = query
-          ? await searchAnime(query)
-          : await getTopAnime();
+        const result: JikanSearchResponse =
+          query.length >= MIN_ANIME_QUERY_LENGTH
+            ? await searchAnime(query, 1, signal)
+            : await getTopAnime(1, signal);
 
         return result.data.map((anime): MediaItem => ({
           id: anime.mal_id,
@@ -96,22 +104,26 @@ export default function Home() {
       </div>
 
       <div className="max-w-6xl mx-auto mt-8">
-        {isLoading && (
+        {isQueryTooShort && (
+          <p className="text-center text-gray-500">Ketik minimal 3 huruf buat search anime</p>
+        )}
+
+        {!isQueryTooShort && isLoading && (
           <p className="text-center text-gray-500">Loading...</p>
         )}
 
-        {isError && (
+        {!isQueryTooShort && isError && (
           <p className="text-center text-red-500">
             Failed to load data. Please try again.
           </p>
         )}
 
-        {!isLoading && !isError && data?.length === 0 && (
+        {!isQueryTooShort && !isLoading && !isError && data?.length === 0 && (
           <p className="text-center text-gray-500">No results found.</p>
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-          {data?.map((item, index) => (
+          {!isQueryTooShort && data?.map((item, index) => (
             <MovieCard
               key={`${item.mediaType}-${item.id}`}
               id={item.id}
@@ -126,6 +138,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-    </div >
+    </div>
   );
 }

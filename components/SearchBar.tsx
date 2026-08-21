@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useDebounce } from "use-debounce";
+import { useState } from "react";
 import { Search } from "lucide-react";
 
 interface SearchBarProps {
@@ -10,13 +9,13 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ onSearch, onTabChange }: SearchBarProps) {
-    const [query, setQuery] = useState("");
+    const [inputValue, setInputValue] = useState("");
     const [activeTab, setActiveTab] = useState<"MOVIE" | "ANIME">("MOVIE");
-    const [debouncedQuery] = useDebounce(query, 500);
 
-    useEffect(() => {
-        onSearch(debouncedQuery);
-    }, [debouncedQuery, onSearch]);
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        onSearch(inputValue.trim());
+    };
 
     const handleTabChange = (tab: "MOVIE" | "ANIME") => {
         setActiveTab(tab);
@@ -25,19 +24,25 @@ export default function SearchBar({ onSearch, onTabChange }: SearchBarProps) {
 
     return (
         <div className="w-full max-w-2xl mx-auto">
-            <div className="relative">
+            <form onSubmit={handleSubmit} className="relative">
                 <Search
                     size={18}
                     className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
                 />
                 <input
                     type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Search movie or anime..."
-                    className="w-full pl-11 pr-4 py-3 rounded-full border-2 border-gray-300 focus:border-blue-500 focus:outline-none text-black"
+                    className="w-full pl-11 pr-24 py-3 rounded-full border-2 border-gray-300 focus:border-blue-500 focus:outline-none text-black"
                 />
-            </div>
+                <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-full"
+                >
+                    Search
+                </button>
+            </form>
 
             <div className="flex gap-2 mt-3 justify-center">
                 <button
