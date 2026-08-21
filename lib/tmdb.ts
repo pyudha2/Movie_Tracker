@@ -51,3 +51,37 @@ export const getImageUrl = (path: string | null, size: string = "w500") => {
     if (!path) return null;
     return `https://image.tmdb.org/t/p/${size}${path}`;
 };
+
+export const getNowPlayingMovies = async (page: number = 1) => {
+    const { data } = await tmdbClient.get("/movie/now_playing", {
+        params: { page },
+    });
+    return data;
+};
+
+export const getUpcomingMoviesByMonth = async (
+    year: number,
+    month: number,
+    page: number = 1
+) => {
+    const startDate = `${year}-${String(month).padStart(2, "0")}-01`;
+    const lastDay = new Date(year, month, 0).getDate();
+    const endDate = `${year}-${String(month).padStart(2, "0")}-${lastDay}`;
+
+    const { data } = await tmdbClient.get("/discover/movie", {
+        params: {
+            "primary_release_date.gte": startDate,
+            "primary_release_date.lte": endDate,
+            sort_by: "popularity.desc",
+            page,
+        },
+    });
+    return data;
+};
+
+export const getTopRatedMovies = async (page: number = 1) => {
+    const { data } = await tmdbClient.get("/movie/top_rated", {
+        params: { page },
+    });
+    return data;
+};
